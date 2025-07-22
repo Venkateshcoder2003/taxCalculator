@@ -1,13 +1,5 @@
 
-**TAX Calculator Project Structure**
-
-
-taxCalculator/
-├── src/
-│ ├── models/ # Item types: Raw, Manufactured, Imported
-│ ├── utils/ # Tax Factory and Input Parser
-│ └── index.ts # Entry point
-└── README.md
+**TAX Calculator**
 
 ## Features
 - Dynamically creates item types using the Factory Design Pattern.
@@ -17,7 +9,6 @@ taxCalculator/
    - Manufactured
  
 ##  How to Run
-  `Run these in command line`
   # Install typescript
     npm install -g typescript
   # Install dependencies
