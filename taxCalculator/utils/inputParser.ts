@@ -1,3 +1,4 @@
+//all user input should be of type parsedInput
 export interface parsedInput
 {
     name: string;
@@ -16,6 +17,7 @@ export class InputParser
             const key = args[ i ];
             const value = args[ i + 1 ];
 
+            //Validating user input 
             if ( !value || value.startsWith( "-" ) )
             {
                 throw new Error( `Missing Value for Argument: ${ key }` );

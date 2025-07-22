@@ -2,6 +2,7 @@ import { Item } from "../src/models/item"
 
 export class ItemManager
 {
+  //an array of type Item to store and print items
   private items: Item[] = [];
 
   addItem ( item: Item ): void

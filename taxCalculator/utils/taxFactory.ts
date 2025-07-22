@@ -1,6 +1,6 @@
 //import all items
 //This taxFactory.ts is a main factory class for creating instances of required type based on user input
-//in this way reducing tight-coupling
+//in this way are reducing tight-coupling and following OCP Principle
 
 import { importedItem } from "../src/models/importedItem";
 import { manufacturedItem } from "../src/models/manufacturedItem";
