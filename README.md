@@ -1,10 +1,13 @@
 
-** TAX Calculator **
+**TAX Calculator Project Structure**
+
+
 taxCalculator/
 ├── src/
 │ ├── models/ # Item types: Raw, Manufactured, Imported
 │ ├── utils/ # Tax Factory and Input Parser
 │ └── index.ts # Entry point
+└── README.md
 
 ## Features
 - Dynamically creates item types using the Factory Design Pattern.
