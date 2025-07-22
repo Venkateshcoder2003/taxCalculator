@@ -9,39 +9,52 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-//this is the place where we take input from user parse it and create the respective items
+//This is the file
 var readline = require("readline");
-var taxFactory_1 = require("./utils/taxFactory"); //Factory that creates items
-var inputParser_1 = require("./utils/inputParser");
-var itemManager_1 = require("./utils/itemManager");
+var taxFactory_1 = require("./utils/taxFactory"); //Factory responsible for creating item objects.
+var inputParser_1 = require("./utils/inputParser"); // Parses CLI arguments.
+var itemManager_1 = require("./utils/itemManager"); // Manages list of items and prints final result
 //creating the interface for reading the inputs from user
 var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
-var manager = new itemManager_1.ItemManager();
-var inputParser = new inputParser_1.InputParser();
+// Creating instances of required classes
+var manager = new itemManager_1.ItemManager(); //Holds and manages created items.
+var inputParser = new inputParser_1.InputParser(); //object that Handles command-line parsing.
+var taxFactory = new taxFactory_1.TaxFactory(); // Factory object Responsible for item creation based on type.
+// Recursive function to continuously take user input.
 function takeUserInput() {
-    rl.question("\nDo you want to enter te details(y/n): ", function (answer) {
+    //asking the user whether he enters the items or not.
+    rl.question('\nDo you want to enter te details "y" for YES and "n" for NO(y/n): ', function (answer) {
         if (answer.toLocaleLowerCase() === "y") {
-            rl.question("Enter args like: -name \"Soap\" -price 20 -quantity 2 -type raw\n: ", function (userInput) {
+            // Prompt user to enter item details
+            rl.question('Enter args like: -name "Soap" -price 20 -quantity 2 -type raw\n: ', function (userInput) {
+                //storing all the arguments in an array.
                 var argument = __spreadArray(["node", "app.ts"], userInput.trim().split(" "), true);
                 try {
+                    // Parsing  arguments into structured object.
                     var parsedArguments = inputParser.parseArguments(argument);
-                    var item = taxFactory_1.taxFactory.createItem(parsedArguments.name, parsedArguments.price, parsedArguments.quantity, parsedArguments.type);
+                    // Create appropriate item using factory based on type.
+                    var item = taxFactory.createItem(parsedArguments.name, parsedArguments.price, parsedArguments.quantity, parsedArguments.type);
+                    // Adding the item to manager list.
                     manager.addItem(item);
+                    // Recursively asking the user  for next item.
                     takeUserInput();
                 }
                 catch (err) {
+                    // Handling  any parsing or creation errors
                     console.log(err.message);
                     takeUserInput();
                 }
             });
         }
         else {
+            // if User chose to stop entering data, then  printing the  final list.
             manager.printItems();
-            rl.close();
+            rl.close(); // Close the input interface
         }
     });
 }
+// Starting  input process
 takeUserInput();

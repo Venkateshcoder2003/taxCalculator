@@ -1,45 +1,61 @@
-//this is the place where we take input from user parse it and create the respective items
+//This is the file
 import * as readline from "readline";
-import { taxFactory } from "./utils/taxFactory";//Factory that creates items
-import { InputParser } from "./utils/inputParser";
-import { ItemManager } from "./utils/itemManager";
-
+import { TaxFactory } from "./utils/taxFactory"; //Factory responsible for creating item objects.
+import { InputParser } from "./utils/inputParser"; // Parses CLI arguments.
+import { ItemManager } from "./utils/itemManager"; // Manages list of items and prints final result
 
 //creating the interface for reading the inputs from user
-const rl = readline.createInterface( {
-    input: process.stdin,
-    output: process.stdout,
-} );
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-const manager = new ItemManager();
-const inputParser = new InputParser();
-function takeUserInput ()
-{
-    rl.question( "\nDo you want to enter te details(y/n): ", ( answer ) =>
-    {
-        if ( answer.toLocaleLowerCase() === "y" )
-        {
-            rl.question( "Enter args like: -name \"Soap\" -price 20 -quantity 2 -type raw\n: ", ( userInput ) =>
-            {
-                const argument = [ "node", "app.ts", ...userInput.trim().split( " " ) ];
-                try
-                {
-                    const parsedArguments = inputParser.parseArguments( argument );
-                    const item = taxFactory.createItem( parsedArguments.name, parsedArguments.price, parsedArguments.quantity, parsedArguments.type );
-                    manager.addItem( item );
-                    takeUserInput();
-                } catch ( err: any )
-                {
-                    console.log( err.message );
-                    takeUserInput();
-                }
-            } )
-        } else
-        {
-            manager.printItems();
-            rl.close();
-        }
-    } );
+// Creating instances of required classes
+const manager = new ItemManager(); //Holds and manages created items.
+const inputParser = new InputParser(); //object that Handles command-line parsing.
+const taxFactory = new TaxFactory(); // Factory object Responsible for item creation based on type.
+
+// Recursive function to continuously take user input.
+function takeUserInput() {
+  //asking the user whether he enters the items or not.
+  rl.question(
+    '\nDo you want to enter te details "y" for YES and "n" for NO(y/n): ',
+    (answer) => {
+      if (answer.toLocaleLowerCase() === "y") {
+        // Prompt user to enter item details
+        rl.question(
+          'Enter args like: -name "Soap" -price 20 -quantity 2 -type raw\n: ',
+          (userInput) => {
+            //storing all the arguments in an array.
+            const argument = ["node", "app.ts", ...userInput.trim().split(" ")];
+            try {
+              // Parsing  arguments into structured object.
+              const parsedArguments = inputParser.parseArguments(argument);
+              // Create appropriate item using factory based on type.
+              const item = taxFactory.createItem(
+                parsedArguments.name,
+                parsedArguments.price,
+                parsedArguments.quantity,
+                parsedArguments.type
+              );
+              // Adding the item to manager list.
+              manager.addItem(item);
+              // Recursively asking the user  for next item.
+              takeUserInput();
+            } catch (err: any) {
+              // Handling  any parsing or creation errors
+              console.log(err.message);
+              takeUserInput();
+            }
+          }
+        );
+      } else {
+        // if User chose to stop entering data, then  printing the  final list.
+        manager.printItems();
+        rl.close(); // Close the input interface
+      }
+    }
+  );
 }
-
+// Starting  input process
 takeUserInput();
