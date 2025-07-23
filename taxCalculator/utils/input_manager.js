@@ -1,34 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rl = void 0;
-exports.takeName = takeName;
-exports.takePrice = takePrice;
-exports.takeQuantity = takeQuantity;
-exports.takeType = takeType;
+exports.validateName = validateName;
+exports.validatePrice = validatePrice;
+exports.validateQuantity = validateQuantity;
+exports.validateType = validateType;
 exports.confirm = confirm;
-var Logger_1 = require("./Logger");
+exports.closeRl = closeRl;
+var logger_1 = require("./logger");
 var readline = require("readline");
 // Readline interface for terminal input/output
-exports.rl = readline.createInterface({
+var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
 //Prompts user for item name.
-function takeName() {
+function validateName() {
     return new Promise(function (res) {
-        exports.rl.question("Enter Name: ", function (name) {
+        rl.question("Enter Name: ", function (name) {
             res(name);
         });
     });
 }
 //Prompts user for item Price.
-function takePrice() {
+function validatePrice() {
     return new Promise(function (res) {
-        exports.rl.question("Enter Price: ", function (userInput) {
+        rl.question("Enter Price: ", function (userInput) {
+            console.log(userInput);
             var price = parseFloat(userInput);
             if (price < 0) {
-                Logger_1.Logger.error("Price can't be Negative");
-                res(takePrice());
+                logger_1.Logger.error("Price can't be less than 0.");
+                res(validatePrice());
             }
             else {
                 res(price);
@@ -37,13 +38,14 @@ function takePrice() {
     });
 }
 //Prompts user for item Quantity.
-function takeQuantity() {
+function validateQuantity() {
     return new Promise(function (res) {
-        exports.rl.question("Enter quantity: ", function (userInput) {
+        rl.question("Enter Quantity: ", function (userInput) {
             var quantity = parseInt(userInput);
+            console.log(userInput);
             if (quantity < 1) {
-                Logger_1.Logger.info("Invalid quantity. Please enter a positive integer.");
-                res(takeQuantity());
+                logger_1.Logger.info("Quantity must be greater than 1. Please provide a valid number.");
+                res(validateQuantity());
             }
             else {
                 res(quantity);
@@ -52,9 +54,9 @@ function takeQuantity() {
     });
 }
 //Prompts user for item Type.
-function takeType() {
+function validateType() {
     return new Promise(function (res) {
-        exports.rl.question("Enter type (1 for RAW, 2 for MANUFACTURED, 3 for IMPORTED): ", function (typeStr) {
+        rl.question("Enter type (1 for RAW, 2 for MANUFACTURED, 3 for IMPORTED): ", function (typeStr) {
             switch (typeStr.trim()) {
                 case "1":
                     res("raw");
@@ -66,8 +68,8 @@ function takeType() {
                     res("imported");
                     break;
                 default:
-                    Logger_1.Logger.info("Invalid type. Please enter 1, 2, or 3.");
-                    res(takeType());
+                    logger_1.Logger.info("Invalid type. Please enter 1(Raw), 2(Manufactured), or 3(Imported).");
+                    res(validateType());
             }
         });
     });
@@ -75,8 +77,11 @@ function takeType() {
 //Asks user if they want to continue adding items.
 function confirm() {
     return new Promise(function (res) {
-        exports.rl.question("Do you want to enter another item? (y/n): ", function (again) {
+        rl.question("Do you want to enter another item? (y/n): ", function (again) {
             res(again.trim().toLowerCase() === "y");
         });
     });
+}
+function closeRl() {
+    rl.close();
 }

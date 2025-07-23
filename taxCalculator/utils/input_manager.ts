@@ -1,14 +1,14 @@
-import { Logger } from "./Logger";
+import { Logger } from "./logger";
 import * as readline from "readline";
 
 // Readline interface for terminal input/output
-export const rl = readline.createInterface({
+const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
 //Prompts user for item name.
-export function takeName(): Promise<string> {
+export function validateName(): Promise<string> {
   return new Promise((res) => {
     rl.question("Enter Name: ", (name) => {
       res(name);
@@ -17,13 +17,14 @@ export function takeName(): Promise<string> {
 }
 
 //Prompts user for item Price.
-export function takePrice(): Promise<number> {
+export function validatePrice(): Promise<number> {
   return new Promise((res) => {
     rl.question("Enter Price: ", (userInput) => {
+      console.log(userInput);
       const price = parseFloat(userInput);
       if (price < 0) {
-        Logger.error("Price can't be Negative");
-        res(takePrice());
+        Logger.error("Price can't be less than 0.");
+        res(validatePrice());
       } else {
         res(price);
       }
@@ -32,13 +33,16 @@ export function takePrice(): Promise<number> {
 }
 
 //Prompts user for item Quantity.
-export function takeQuantity(): Promise<number> {
+export function validateQuantity(): Promise<number> {
   return new Promise((res) => {
-    rl.question("Enter quantity: ", (userInput) => {
+    rl.question("Enter Quantity: ", (userInput) => {
       const quantity = parseInt(userInput);
+      console.log(userInput);
       if (quantity < 1) {
-        Logger.info("Invalid quantity. Please enter a positive integer.");
-        res(takeQuantity());
+        Logger.info(
+          "Quantity must be greater than 1. Please provide a valid number."
+        );
+        res(validateQuantity());
       } else {
         res(quantity);
       }
@@ -47,7 +51,7 @@ export function takeQuantity(): Promise<number> {
 }
 
 //Prompts user for item Type.
-export function takeType(): Promise<string> {
+export function validateType(): Promise<string> {
   return new Promise((res) => {
     rl.question(
       "Enter type (1 for RAW, 2 for MANUFACTURED, 3 for IMPORTED): ",
@@ -63,8 +67,10 @@ export function takeType(): Promise<string> {
             res("imported");
             break;
           default:
-            Logger.info("Invalid type. Please enter 1, 2, or 3.");
-            res(takeType());
+            Logger.info(
+              "Invalid type. Please enter 1(Raw), 2(Manufactured), or 3(Imported)."
+            );
+            res(validateType());
         }
       }
     );
@@ -79,3 +85,8 @@ export function confirm(): Promise<boolean> {
     });
   });
 }
+
+export function closeRl(): void {
+  rl.close();
+}
+

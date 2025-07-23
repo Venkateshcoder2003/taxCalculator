@@ -1,18 +1,18 @@
 import * as readline from "readline";
-import { TaxFactory } from "./utils/tax_factory";
-import { ItemManager } from "./utils/item_manager";
-import { Logger } from "./utils/Logger";
+import { TaxFactory } from "./utils/tax_calculator_factory";
+import { ItemBiller } from "./utils/item_biller";
+import { Logger } from "./utils/logger";
 import {
-  takeName,
-  takePrice,
-  takeQuantity,
-  takeType,
+  validateName,
+  validatePrice,
+  validateQuantity,
+  validateType,
   confirm,
-  rl,
-} from "./utils/take_input";
+  closeRl,
+} from "./utils/input_manager";
 
 // Initialize factory and manager instances.
-const itemManager = new ItemManager();
+const itemBiller = new ItemBiller();
 const taxFactory = new TaxFactory();
 
 //Recursive function to accept item input, create item via factory, and add to manager.
@@ -20,13 +20,13 @@ const taxFactory = new TaxFactory();
 async function takeItemInput() {
   try {
     // Create item using factory
-    const name = await takeName();
-    const price = await takePrice();
-    const quantity = await takeQuantity();
-    const type = await takeType();
+    const name = await validateName();
+    const price = await validatePrice();
+    const quantity = await validateQuantity();
+    const type = await validateType();
 
     const item = taxFactory.createItem(name, price, quantity, type);
-    itemManager.addItem(item);
+    itemBiller.addItem(item);
   } catch (err: any) {
     Logger.error(`${err.message}`);
   }
@@ -36,8 +36,8 @@ async function takeItemInput() {
   if (moreInput) {
     takeItemInput(); // Continue Loop.
   } else {
-    itemManager.printItems(); //add Items.
-    rl.close(); //Close Input.
+    itemBiller.printItems(); //add Items.
+    closeRl(); //close Input loop
   }
 }
 

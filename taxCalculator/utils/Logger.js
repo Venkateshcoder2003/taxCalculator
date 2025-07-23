@@ -6,10 +6,10 @@ var Logger = /** @class */ (function () {
     function Logger() {
     }
     Logger.info = function (message) {
-        console.log("".concat(message));
+        console.log("[tax-calculator]".concat(message));
     };
     Logger.error = function (message) {
-        console.log("".concat(message));
+        console.log("[tax-calculator]".concat(message));
     };
     return Logger;
 }());

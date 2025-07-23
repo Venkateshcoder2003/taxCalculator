@@ -1,5 +1,5 @@
 //This interface defines the structure for parsed command-line arguments.
-import { Logger } from "./Logger";
+import { Logger } from "./logger";
 export interface parsedInput {
   name: string;
   price: number;

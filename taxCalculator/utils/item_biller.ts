@@ -1,8 +1,8 @@
 import { Item } from "../src/models/item";
-import { Logger } from "./Logger";
+import { Logger } from "./logger";
 
 // Manager class to handle storing and displaying items.
-export class ItemManager {
+export class ItemBiller {
   //array to hold multiple Item instances.
   private items: Item[] = [];
 

@@ -36,13 +36,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var tax_factory_1 = require("./utils/tax_factory");
-var item_manager_1 = require("./utils/item_manager");
-var Logger_1 = require("./utils/Logger");
-var take_input_1 = require("./utils/take_input");
+var tax_calculator_factory_1 = require("./utils/tax_calculator_factory");
+var item_biller_1 = require("./utils/item_biller");
+var logger_1 = require("./utils/logger");
+var input_manager_1 = require("./utils/input_manager");
 // Initialize factory and manager instances.
-var itemManager = new item_manager_1.ItemManager();
-var taxFactory = new tax_factory_1.TaxFactory();
+var itemBiller = new item_biller_1.ItemBiller();
+var taxFactory = new tax_calculator_factory_1.TaxFactory();
 //Recursive function to accept item input, create item via factory, and add to manager.
 //Uses async/await to ensure sequential prompts.
 function takeItemInput() {
@@ -52,34 +52,34 @@ function takeItemInput() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 5, , 6]);
-                    return [4 /*yield*/, (0, take_input_1.takeName)()];
+                    return [4 /*yield*/, (0, input_manager_1.validateName)()];
                 case 1:
                     name_1 = _a.sent();
-                    return [4 /*yield*/, (0, take_input_1.takePrice)()];
+                    return [4 /*yield*/, (0, input_manager_1.validatePrice)()];
                 case 2:
                     price = _a.sent();
-                    return [4 /*yield*/, (0, take_input_1.takeQuantity)()];
+                    return [4 /*yield*/, (0, input_manager_1.validateQuantity)()];
                 case 3:
                     quantity = _a.sent();
-                    return [4 /*yield*/, (0, take_input_1.takeType)()];
+                    return [4 /*yield*/, (0, input_manager_1.validateType)()];
                 case 4:
                     type = _a.sent();
                     item = taxFactory.createItem(name_1, price, quantity, type);
-                    itemManager.addItem(item);
+                    itemBiller.addItem(item);
                     return [3 /*break*/, 6];
                 case 5:
                     err_1 = _a.sent();
-                    Logger_1.Logger.error("".concat(err_1.message));
+                    logger_1.Logger.error("".concat(err_1.message));
                     return [3 /*break*/, 6];
-                case 6: return [4 /*yield*/, (0, take_input_1.confirm)()];
+                case 6: return [4 /*yield*/, (0, input_manager_1.confirm)()];
                 case 7:
                     moreInput = _a.sent();
                     if (moreInput) {
                         takeItemInput(); // Continue Loop.
                     }
                     else {
-                        itemManager.printItems(); //add Items.
-                        take_input_1.rl.close(); //Close Input.
+                        itemBiller.printItems(); //add Items.
+                        (0, input_manager_1.closeRl)(); //close Input loop
                     }
                     return [2 /*return*/];
             }
