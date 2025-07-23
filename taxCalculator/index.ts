@@ -1,6 +1,6 @@
 import * as readline from "readline";
-import { TaxFactory } from "./utils/taxFactory";
-import { ItemManager } from "./utils/itemManager";
+import { TaxFactory } from "./utils/tax_factory";
+import { ItemManager } from "./utils/item_manager";
 import { Logger } from "./utils/Logger";
 import {
   takeName,
@@ -9,7 +9,7 @@ import {
   takeType,
   confirm,
   rl,
-} from "./utils/takeInput";
+} from "./utils/take_input";
 
 // Initialize factory and manager instances.
 const itemManager = new ItemManager();

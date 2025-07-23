@@ -36,13 +36,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var taxFactory_1 = require("./utils/taxFactory");
-var itemManager_1 = require("./utils/itemManager");
+var tax_factory_1 = require("./utils/tax_factory");
+var item_manager_1 = require("./utils/item_manager");
 var Logger_1 = require("./utils/Logger");
-var takeInput_1 = require("./utils/takeInput");
+var take_input_1 = require("./utils/take_input");
 // Initialize factory and manager instances.
-var itemManager = new itemManager_1.ItemManager();
-var taxFactory = new taxFactory_1.TaxFactory();
+var itemManager = new item_manager_1.ItemManager();
+var taxFactory = new tax_factory_1.TaxFactory();
 //Recursive function to accept item input, create item via factory, and add to manager.
 //Uses async/await to ensure sequential prompts.
 function takeItemInput() {
@@ -52,16 +52,16 @@ function takeItemInput() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 5, , 6]);
-                    return [4 /*yield*/, (0, takeInput_1.takeName)()];
+                    return [4 /*yield*/, (0, take_input_1.takeName)()];
                 case 1:
                     name_1 = _a.sent();
-                    return [4 /*yield*/, (0, takeInput_1.takePrice)()];
+                    return [4 /*yield*/, (0, take_input_1.takePrice)()];
                 case 2:
                     price = _a.sent();
-                    return [4 /*yield*/, (0, takeInput_1.takeQuantity)()];
+                    return [4 /*yield*/, (0, take_input_1.takeQuantity)()];
                 case 3:
                     quantity = _a.sent();
-                    return [4 /*yield*/, (0, takeInput_1.takeType)()];
+                    return [4 /*yield*/, (0, take_input_1.takeType)()];
                 case 4:
                     type = _a.sent();
                     item = taxFactory.createItem(name_1, price, quantity, type);
@@ -71,7 +71,7 @@ function takeItemInput() {
                     err_1 = _a.sent();
                     Logger_1.Logger.error("".concat(err_1.message));
                     return [3 /*break*/, 6];
-                case 6: return [4 /*yield*/, (0, takeInput_1.confirm)()];
+                case 6: return [4 /*yield*/, (0, take_input_1.confirm)()];
                 case 7:
                     moreInput = _a.sent();
                     if (moreInput) {
@@ -79,7 +79,7 @@ function takeItemInput() {
                     }
                     else {
                         itemManager.printItems(); //add Items.
-                        takeInput_1.rl.close(); //Close Input.
+                        take_input_1.rl.close(); //Close Input.
                     }
                     return [2 /*return*/];
             }

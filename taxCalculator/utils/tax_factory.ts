@@ -1,9 +1,9 @@
 // Importing the class for handling imported items.
-import { importedItem } from "../src/models/importedItem";
+import { importedItem } from "../src/models/imported_item";
 // Importing the class for handling manufactured items.
-import { manufacturedItem } from "../src/models/manufacturedItem";
+import { manufacturedItem } from "../src/models/manufactured_item";
 // Importing the class for handling raw items.
-import { rawItem } from "../src/models/rawItem";
+import { rawItem } from "../src/models/raw_item";
 import { Logger } from "./Logger";
 
 // Enum to restrict the type of items.
