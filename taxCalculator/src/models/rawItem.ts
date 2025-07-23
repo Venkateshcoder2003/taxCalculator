@@ -1,5 +1,6 @@
 import { Item } from "./item";
-//Class representing a rawItem that implements Item iterface.
+// Class representing a Raw Item.
+// Implements the Item interface and provides tax calculation specific to raw Item.
 export class rawItem implements Item {
   public name: string;
   public price: number;

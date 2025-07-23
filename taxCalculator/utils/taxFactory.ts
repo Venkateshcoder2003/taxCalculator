@@ -1,12 +1,17 @@
-//import all items
-//This taxFactory.ts is a main factory class for creating instances of required type based on user input
-//This ensures SRP and OCP
-//SRP-Single responsibility principle
-//OCP-open closed principle
-
+// Importing the class for handling imported items.
 import { importedItem } from "../src/models/importedItem";
+// Importing the class for handling manufactured items.
 import { manufacturedItem } from "../src/models/manufacturedItem";
+// Importing the class for handling raw items.
 import { rawItem } from "../src/models/rawItem";
+import { Logger } from "./Logger";
+
+// Enum to restrict the type of items.
+export enum ItemType {
+  Raw = "raw",
+  Manufactured = "manufactured",
+  Imported = "imported",
+}
 
 //Factory class to abstract object creation logic based on input type.
 export class TaxFactory {
@@ -15,15 +20,19 @@ export class TaxFactory {
     let lowerType = type.toLocaleLowerCase();
 
     //Dynamically creating the item based on user input.
-    if (lowerType == "raw") {
-      return new rawItem(name, price, quantity, type);
-    } else if (lowerType == "manufactured") {
-      return new manufacturedItem(name, price, quantity, type);
-    } else if (lowerType == "imported") {
-      return new importedItem(name, price, quantity, type);
-    } else {
-      //if the item is not the one listed above then an error is returned with an appropriate message.
-      throw new Error("Invalid item type: " + type);
+
+    switch (lowerType) {
+      case ItemType.Raw:
+        return new rawItem(name, price, quantity, type);
+
+      case ItemType.Manufactured:
+        return new manufacturedItem(name, price, quantity, type);
+
+      case ItemType.Imported:
+        return new importedItem(name, price, quantity, type);
+
+      default:
+        Logger.error(`Invalid item type: ${type}`);
     }
   }
 }

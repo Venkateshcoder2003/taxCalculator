@@ -1,5 +1,6 @@
 import { Item } from "./item";
-//Class representing a manufacturedItem that implements Item iterface.
+// Class representing a Manufactured Item.
+// Implements the Item interface and provides tax calculation specific to manufactured Item.
 export class manufacturedItem implements Item {
   public name: string;
   public price: number;

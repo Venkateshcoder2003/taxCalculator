@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.rawItem = void 0;
-//Class representing a rawItem that implements Item iterface.
+// Class representing a Raw Item.
+// Implements the Item interface and provides tax calculation specific to raw Item.
 var rawItem = /** @class */ (function () {
     //constructor that initializes the name, price, quantity and type of the rawItem.
     function rawItem(name, price, quantity, type) {

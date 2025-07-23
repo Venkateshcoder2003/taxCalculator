@@ -1,4 +1,5 @@
 //This interface defines the structure for parsed command-line arguments.
+import { Logger } from "./Logger";
 export interface parsedInput {
   name: string;
   price: number;
@@ -35,12 +36,16 @@ export class InputParser {
           input.type = value;
           break;
         default:
-          throw new Error(`Unknown Argument Entered: ${key}`);
+          Logger.error(`Unknown Argument Entered: ${key}`);
       }
     }
     //Explicitly checking whether user entered all required fields or not.
-    if (!input.name || !input.price || !input.quantity || !input.type) {
-      throw new Error("Missing Some Arguments");
+    if (!input.type) {
+      Logger.error(
+        `Missing Type: Type is required for product "${
+          input.name || "Unknown"
+        }"`
+      );
     }
     //now we are returning the input object as parsedInput type.
     return input as parsedInput;

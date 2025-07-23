@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.importedItem = void 0;
-//Class representing a importedItem that implements Item iterface.
+// Class representing an Imported Item.
+// Implements the Item interface and provides tax calculation specific to imported Item.
 var importedItem = /** @class */ (function () {
     //constructor that initializes the name, price, quantity and type of the importedItem.
     function importedItem(name, price, quantity, type) {
