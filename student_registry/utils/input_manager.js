@@ -98,7 +98,7 @@ function validateAge() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (res) {
-                    rl.question(("Enter Age: "), function (userInput) {
+                    rl.question("Enter Age: ", function (userInput) {
                         var age = parseInt(userInput);
                         if (age < 0) {
                             res(validateAge());
@@ -116,7 +116,7 @@ function validateAddress() {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (res) {
                     rl.question("Enter Address: ", function (userInput) {
-                        if (typeof userInput === 'string') {
+                        if (typeof userInput === "string") {
                             res(userInput);
                         }
                         else {

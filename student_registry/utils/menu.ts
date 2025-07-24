@@ -76,10 +76,9 @@ export async function showMenu(): Promise<void> {
           serializer.saveDataToDisk(manager.getUsers());
           Logger.info(" User Data saved.");
         }
-        
-          closeRl();
+
+        closeRl();
         return;
-        
       }
       default:
         Logger.info("Invalid choice. Please try again.");

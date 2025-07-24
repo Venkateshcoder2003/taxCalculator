@@ -47,7 +47,5 @@ export class UserManager {
     return false;
   }
 
-  sortUsers(): void {
-
-  }
+  sortUsers(): void {}
 }

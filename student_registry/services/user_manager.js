@@ -42,8 +42,7 @@ var UserManager = /** @class */ (function () {
         }
         return false;
     };
-    UserManager.prototype.sortUsers = function () {
-    };
+    UserManager.prototype.sortUsers = function () { };
     return UserManager;
 }());
 exports.UserManager = UserManager;
