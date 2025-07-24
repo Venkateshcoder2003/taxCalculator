@@ -20,7 +20,6 @@ export function validateName(): Promise<string> {
 export function validatePrice(): Promise<number> {
   return new Promise((res) => {
     rl.question("Enter Price: ", (userInput) => {
-      console.log(userInput);
       const price = parseFloat(userInput);
       if (price < 0) {
         Logger.error("Price can't be less than 0.");

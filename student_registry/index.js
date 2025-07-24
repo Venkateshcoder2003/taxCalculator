@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var serializer_1 = require("./services/serializer");
+var user_manager_1 = require("./services/user_manager");
+var menu_1 = require("./utils/menu");
+var serializer = new serializer_1.Serializer();
+var Instance = user_manager_1.UserManager.getInstance();
+var savedStudentRecorde = serializer.loadDataFromDisk();
+Instance.setUsers(savedStudentRecorde);
+(0, menu_1.showMenu)();
