@@ -16,8 +16,8 @@ It uses the Singleton design pattern to support data persistence.
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/student-management-system.git
-cd student-management-system
+git clone https://github.com/your-username/student_registry.git
+cd student_registry
 
 # Install dependencies
 npm install
