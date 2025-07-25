@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.choises = void 0;
+//Enum that represents the Menu Options in the application.
 var choises;
 (function (choises) {
     choises[choises["ADD"] = 1] = "ADD";

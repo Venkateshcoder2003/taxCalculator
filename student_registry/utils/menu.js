@@ -37,100 +37,127 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.showMenu = showMenu;
-var user_manager_1 = require("../services/user_manager");
+var student_manager_1 = require("../services/student_manager");
 var input_manager_1 = require("../utils/input_manager");
 var user_factory_1 = require("./user_factory");
 var choises_1 = require("../models/choises");
 var serializer_1 = require("../services/serializer");
 var logger_1 = require("./logger");
+//Creating instances of UserFactory and Serializer
 var userFactory = new user_factory_1.UserFactory();
 var serializer = new serializer_1.Serializer();
+var manager = student_manager_1.UserManager.getInstance();
+//This Function Displays teh menu.
 function showMenu() {
     return __awaiter(this, void 0, void 0, function () {
-        var manager, choice, _a, fullName, age, address, rollNumber, courses, user, err_1, rollNumber, save;
+        var choice, _a, fullName, age, address, rollNumber, courses, user, err_1, userFromFile, wantCustomSort, sortField, sortType, err_2, rollNumber, save;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    manager = user_manager_1.UserManager.getInstance();
-                    _b.label = 1;
-                case 1:
-                    if (!true) return [3 /*break*/, 19];
-                    logger_1.Logger.info("\n----- MENU -----");
+                    if (!true) return [3 /*break*/, 24];
+                    logger_1.Logger.info("\n\n----- MENU -----");
                     logger_1.Logger.info("1. Add User");
                     logger_1.Logger.info("2. Display Users");
                     logger_1.Logger.info("3. Delete User");
                     logger_1.Logger.info("4. Save Users");
                     logger_1.Logger.info("5. Exit");
                     return [4 /*yield*/, (0, input_manager_1.validateChoice)()];
-                case 2:
+                case 1:
                     choice = _b.sent();
                     _a = choice;
                     switch (_a) {
-                        case choises_1.choises.ADD: return [3 /*break*/, 3];
-                        case choises_1.choises.DISPLAY: return [3 /*break*/, 11];
-                        case choises_1.choises.DELETE: return [3 /*break*/, 12];
-                        case choises_1.choises.UPDATE: return [3 /*break*/, 14];
-                        case choises_1.choises.EXIT: return [3 /*break*/, 15];
+                        case choises_1.choises.ADD: return [3 /*break*/, 2];
+                        case choises_1.choises.DISPLAY: return [3 /*break*/, 10];
+                        case choises_1.choises.DELETE: return [3 /*break*/, 17];
+                        case choises_1.choises.UPDATE: return [3 /*break*/, 19];
+                        case choises_1.choises.EXIT: return [3 /*break*/, 20];
                     }
-                    return [3 /*break*/, 17];
-                case 3:
-                    _b.trys.push([3, 9, , 10]);
+                    return [3 /*break*/, 22];
+                case 2:
+                    _b.trys.push([2, 8, , 9]);
                     return [4 /*yield*/, (0, input_manager_1.validateName)()];
-                case 4:
+                case 3:
                     fullName = _b.sent();
                     return [4 /*yield*/, (0, input_manager_1.validateAge)()];
-                case 5:
+                case 4:
                     age = _b.sent();
                     return [4 /*yield*/, (0, input_manager_1.validateAddress)()];
-                case 6:
+                case 5:
                     address = _b.sent();
                     return [4 /*yield*/, (0, input_manager_1.validateRollNumber)()];
-                case 7:
+                case 6:
                     rollNumber = _b.sent();
                     return [4 /*yield*/, (0, input_manager_1.validateCourses)()];
-                case 8:
+                case 7:
                     courses = _b.sent();
                     user = userFactory.createUser(fullName, age, address, rollNumber, courses);
+                    //Storing the student details Temporarly.
                     manager.addUser(user);
                     logger_1.Logger.info("User Added Successfully");
-                    return [3 /*break*/, 10];
-                case 9:
+                    return [3 /*break*/, 9];
+                case 8:
                     err_1 = _b.sent();
                     logger_1.Logger.error("".concat(err_1.message));
-                    return [3 /*break*/, 10];
-                case 10: return [3 /*break*/, 18];
-                case 11:
-                    {
-                        return [3 /*break*/, 18];
+                    return [3 /*break*/, 9];
+                case 9: return [3 /*break*/, 23];
+                case 10:
+                    _b.trys.push([10, 15, , 16]);
+                    userFromFile = serializer.loadDataFromDisk();
+                    if (userFromFile.length === 0) {
+                        logger_1.Logger.info("No Student Records found in the database.");
+                        return [3 /*break*/, 23];
                     }
-                    _b.label = 12;
-                case 12: return [4 /*yield*/, (0, input_manager_1.validateRollNumber)()];
+                    manager.setUsers(userFromFile);
+                    manager.displayUsers();
+                    return [4 /*yield*/, (0, input_manager_1.askForCustomSort)()];
+                case 11:
+                    wantCustomSort = _b.sent();
+                    if (!wantCustomSort) return [3 /*break*/, 14];
+                    return [4 /*yield*/, (0, input_manager_1.validateSortField)()];
+                case 12:
+                    sortField = _b.sent();
+                    return [4 /*yield*/, (0, input_manager_1.validateSortType)()];
                 case 13:
+                    sortType = _b.sent();
+                    manager.sortUsersBy(sortField, sortType);
+                    logger_1.Logger.info("Sorted by ".concat(sortField, " in ").concat(sortType, "."));
+                    manager.displayUsers();
+                    _b.label = 14;
+                case 14: return [3 /*break*/, 16];
+                case 15:
+                    err_2 = _b.sent();
+                    logger_1.Logger.error("Error loading users.");
+                    return [3 /*break*/, 16];
+                case 16: return [3 /*break*/, 23];
+                case 17: return [4 /*yield*/, (0, input_manager_1.validateRollNumber)()];
+                case 18:
                     rollNumber = _b.sent();
                     logger_1.Logger.info("User data with roll RollNumber ".concat(rollNumber, " deleted Successfully"));
                     manager.deleteUser(rollNumber);
-                    return [3 /*break*/, 18];
-                case 14:
+                    return [3 /*break*/, 23];
+                case 19:
                     {
+                        manager.sortUsers();
                         serializer.saveDataToDisk(manager.getUsers());
                         logger_1.Logger.info("User data Update in Student Registry");
-                        return [3 /*break*/, 18];
+                        return [3 /*break*/, 23];
                     }
-                    _b.label = 15;
-                case 15: return [4 /*yield*/, (0, input_manager_1.saveDataBeforeExit)()];
-                case 16:
+                    _b.label = 20;
+                case 20: return [4 /*yield*/, (0, input_manager_1.saveDataBeforeExit)()];
+                case 21:
                     save = _b.sent();
-                    if (save === "y") {
+                    if (save === "y" || save == "yes") {
                         serializer.saveDataToDisk(manager.getUsers());
                         logger_1.Logger.info(" User Data saved.");
                     }
+                    //Closing the readline interface and exit.
                     (0, input_manager_1.closeRl)();
                     return [2 /*return*/];
-                case 17:
+                case 22:
                     logger_1.Logger.info("Invalid choice. Please try again.");
-                    _b.label = 18;
-                case 18: return [3 /*break*/, 1];
-                case 19: return [2 /*return*/];
+                    _b.label = 23;
+                case 23: return [3 /*break*/, 0];
+                case 24: return [2 /*return*/];
             }
         });
     });

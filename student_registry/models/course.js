@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+//Enum that represents the courses
 var Course;
 (function (Course) {
     Course["A"] = "A";

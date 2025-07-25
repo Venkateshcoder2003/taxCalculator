@@ -43,6 +43,9 @@ exports.validateAge = validateAge;
 exports.validateAddress = validateAddress;
 exports.validateRollNumber = validateRollNumber;
 exports.validateCourses = validateCourses;
+exports.askForCustomSort = askForCustomSort;
+exports.validateSortField = validateSortField;
+exports.validateSortType = validateSortType;
 exports.closeRl = closeRl;
 var readline = require("readline");
 var course_1 = require("../models/course");
@@ -52,6 +55,7 @@ var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
+//Validates the user’s menu choice(1-5)
 function validateChoice() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -71,6 +75,7 @@ function validateChoice() {
         });
     });
 }
+//Asking user whether to save or not save data before exiting.
 function saveDataBeforeExit() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -83,6 +88,7 @@ function saveDataBeforeExit() {
         });
     });
 }
+//Asking the student Full Name
 function validateName() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -94,6 +100,7 @@ function validateName() {
         });
     });
 }
+//Validating student Age
 function validateAge() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -111,6 +118,7 @@ function validateAge() {
         });
     });
 }
+//Validate student Address.
 function validateAddress() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -127,6 +135,7 @@ function validateAddress() {
         });
     });
 }
+//Validate student RollNumber.
 function validateRollNumber() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -144,24 +153,7 @@ function validateRollNumber() {
         });
     });
 }
-// export async function validateCourses():Promise<Course>{
-//     return new Promise((res)=>{
-//         rl.question("Enter your courses A-F(comma Separated): ", (userInput)=>{
-//             const validCourses = Object.keys(Course);
-//             if(userInput.length == 4){
-//                 for(let course of userInput){
-//                     if(!validCourses.includes(course)){
-//                         console.log(`The course ${course} is Not Valid Please chooose between A-F`);
-//                         res(validateCourses());
-//                     }
-//                 }
-//                 res(userInput as Course);
-//             }else{
-//                 res(validateCourses());
-//             }
-//         })
-//     })
-// }
+//Validate Student Courses.
 function validateCourses() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -169,18 +161,21 @@ function validateCourses() {
                     rl.question("Enter your Courses A-F:(Comma Separated)", function (userInput) {
                         var inputCourses = [];
                         var parts = userInput.split(",");
+                        //COnverting student input to uppercase and removing leading and trailing spaces.
                         for (var i = 0; i < parts.length; i++) {
                             var toUpper = parts[i].trim().toUpperCase();
                             if (toUpper) {
                                 inputCourses.push(toUpper);
                             }
                         }
+                        //Number of courses should be 4.
                         if (inputCourses.length !== 4) {
                             logger_1.Logger.info("Error: You must enter exactly 4 courses. You entered ".concat(inputCourses.length, "."));
                             res(validateCourses());
                         }
                         var validCourses = Object.keys(course_1.default);
                         var allValid = true;
+                        //Validating courses are valid or Not.
                         for (var i = 0; i < inputCourses.length; i++) {
                             var isValid = false;
                             for (var j = 0; j < validCourses.length; j++) {
@@ -195,7 +190,7 @@ function validateCourses() {
                                 break;
                             }
                         }
-                        //not be duplicated
+                        //Checking for duplicates.
                         if (allValid) {
                             for (var i = 0; i < inputCourses.length; i++) {
                                 for (var j = i + 1; j < inputCourses.length; j++) {
@@ -209,6 +204,7 @@ function validateCourses() {
                                     break;
                             }
                         }
+                        //If all valid then return the input courses.
                         if (allValid) {
                             var courseEnum = [];
                             for (var i = 0; i < inputCourses.length; i++) {
@@ -225,6 +221,79 @@ function validateCourses() {
         });
     });
 }
+//PRomting user for custom sort.
+function askForCustomSort() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (res) {
+                    rl.question("Do you want customSort: ", function (userInput) {
+                        if (userInput === "y" || userInput === "yes") {
+                            res(true);
+                        }
+                        else {
+                            res(false);
+                        }
+                    });
+                })];
+        });
+    });
+}
+//Asking student to select a sorting field (validated)
+function validateSortField() {
+    return __awaiter(this, void 0, void 0, function () {
+        var validFields;
+        return __generator(this, function (_a) {
+            validFields = [
+                "rollnumber",
+                "roll",
+                "age",
+                "name",
+                "fullname",
+                "address",
+            ];
+            return [2 /*return*/, new Promise(function (res) {
+                    rl.question("Enter the field to sort by: ", function (userInput) {
+                        var field = userInput.trim().toLowerCase();
+                        if (validFields.includes(field)) {
+                            if (field === "rollNumber" || field === "roll")
+                                res("rollNumber");
+                            else if (field === "fullName" || field === "name")
+                                res("fullName");
+                            else
+                                res(field || "address");
+                        }
+                        else {
+                            logger_1.Logger.info("Invalid field. Please choose from: rollNumber, age, name, address");
+                            res(validateSortField());
+                        }
+                    });
+                })];
+        });
+    });
+}
+//Asking student to select a sorting order.
+function validateSortType() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (res) {
+                    rl.question("Enter the Sorting Type: ", function (userInput) {
+                        var order = userInput.trim().toLowerCase();
+                        if (order === "asc" || order === "ascending") {
+                            res("asc");
+                        }
+                        else if (order === "desc" || order === "descending") {
+                            res("desc");
+                        }
+                        else {
+                            logger_1.Logger.info('Invalid Sorting Type Entered. Please Enter Either "asc" or "desc".');
+                            res(validateSortType());
+                        }
+                    });
+                })];
+        });
+    });
+}
+//Closes the readline interface
 function closeRl() {
     rl.close();
 }

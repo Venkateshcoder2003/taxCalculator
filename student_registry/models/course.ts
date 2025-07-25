@@ -1,3 +1,4 @@
+//Enum that represents the courses
 enum Course {
   A = "A",
   B = "B",
