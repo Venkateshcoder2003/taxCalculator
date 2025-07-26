@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserFactory = void 0;
-//Factory Class responsible for creatig student object.
+//Factory Class responsible for creatig student object
 var UserFactory = /** @class */ (function () {
     function UserFactory() {
     }

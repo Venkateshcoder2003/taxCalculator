@@ -1,7 +1,7 @@
-//Importing the necessary models.
+//Importing the necessary models
 import { User } from "../models/user";
 
-//Factory Class responsible for creatig student object.
+//Factory Class responsible for creatig student object
 export class UserFactory {
   createUser(
     fullName: string,

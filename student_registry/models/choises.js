@@ -7,6 +7,6 @@ var choises;
     choises[choises["ADD"] = 1] = "ADD";
     choises[choises["DISPLAY"] = 2] = "DISPLAY";
     choises[choises["DELETE"] = 3] = "DELETE";
-    choises[choises["UPDATE"] = 4] = "UPDATE";
+    choises[choises["SAVE"] = 4] = "SAVE";
     choises[choises["EXIT"] = 5] = "EXIT";
 })(choises || (exports.choises = choises = {}));
