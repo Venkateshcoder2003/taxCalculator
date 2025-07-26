@@ -1,0 +1,14 @@
+[
+  {
+    "fullName": "name1",
+    "age": 12,
+    "address": "qwe",
+    "rollNumber": 112,
+    "courses": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ]
+  }
+]
